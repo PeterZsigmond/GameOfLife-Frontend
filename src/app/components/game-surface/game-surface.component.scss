@@ -1,0 +1,28 @@
+$cellSize: 8px;
+
+table {
+    margin: 10px;
+    padding: 3px;
+    background-color: black;
+
+    tr {
+        height: $cellSize;
+        width: $cellSize;
+
+        background-color: black;
+
+        td {
+            height: $cellSize;
+            width: $cellSize;
+
+            padding: 0;
+            
+            div {
+                background-color: white;
+
+                height: $cellSize;
+                width: $cellSize;
+            }
+        }
+    }
+}

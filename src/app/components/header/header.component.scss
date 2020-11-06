@@ -1,0 +1,24 @@
+div {
+    background-color: rgb(139, 60, 60);
+    padding: 10px;
+    height:115px;
+    color: white;
+    margin-bottom: 10px;
+
+    h2 {
+        margin: 5px;
+    }
+
+    p{
+        margin: 8px;
+        white-space: nowrap;
+
+        a {
+            color: rgb(118, 181, 202);
+        }
+
+        .small{
+            font-size: 0.85rem;
+        }
+    }
+}

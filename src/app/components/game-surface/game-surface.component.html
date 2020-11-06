@@ -1,0 +1,7 @@
+<table *ngIf="gameService.gameOfLife != null && gameService.gameOfLife.height != 0">
+    <tr *ngFor="let row of gameService.gameOfLife.cells">
+        <td *ngFor="let column of row">
+            <div *ngIf="column==true"></div>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,30 @@
+div {
+    margin: 20px;
+
+    p {
+        margin: 5px;
+    }
+
+    input[type=file] {
+        margin-bottom: 30px;
+    }
+
+    .file-input {
+        height: 50px;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+
+    .step-button{
+        height: 50px;
+        margin: 0;
+    }
+
+    .generation{
+        margin-top: 10px;
+    }
+    
+    button {
+        margin-bottom: 10px;
+    }
+}

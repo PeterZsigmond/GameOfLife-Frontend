@@ -1,0 +1,15 @@
+<div>
+    <div class="file-input">
+        <p *ngIf="!autoStep">Choose a .lif file:</p>
+        <input type="file" *ngIf="!autoStep" (change)="onFileSelected($event)"><br>
+    </div>
+
+    <button *ngIf="gameService.gameOfLife != null" (click)="automatedStepping()">{{ automatedButtonValue }}</button><br>
+
+    <div class="step-button">
+        <button *ngIf="gameService.gameOfLife != null && gameService.gameOfLife.height != 0 && !autoStep" (click)="onNextStepButtonClick()">Step Forward</button><br>
+        <button *ngIf="gameService.gameOfLife != null && gameService.gameOfLife.height != 0 && !autoStep && gameService.gameOfLifeArray.length != 1" (click)="onStepBackButtonClick()">Step Back</button><br>
+    </div>
+
+    <p class="generation" *ngIf="gameService.gameOfLife != null"><b>Generation: {{ gameService.gameOfLifeArray.length }}</b></p>
+</div>
