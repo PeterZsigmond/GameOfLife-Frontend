@@ -18,6 +18,11 @@ export class GameService {
     
   }
 
+  setCell(x, y): void
+  {
+    this.gameOfLife.cells[y][x] = !this.gameOfLife.cells[y][x];
+  }
+
   stepBackOne(): void
   {
     if(this.gameOfLifeArray.length > 1)
@@ -56,17 +61,47 @@ export class GameService {
     };
   }
 
+  /*setSize(newHeight: number, newWidth: number)
+  {
+    //console.log("setsize: " + newHeight + " " + newWidth);
+
+    let oldCells = this.gameOfLife.cells;
+    let newCells = new Array(newHeight).fill(false).map(() => new Array(newWidth).fill(false));
+
+    let oldHeight = this.gameOfLife.height;
+    let oldWidth = this.gameOfLife.width;
+
+    let heightDiff = newHeight - oldHeight;
+    let widthDiff = newWidth - oldWidth;
+
+    console.log(heightDiff + " " + widthDiff);
+    console.log(heightDiff + " " + widthDiff);
+
+    for(let i = 0; i < oldHeight; i++)
+    {
+      for(let j = 0; j < oldWidth; j++)
+      {
+        console.log(heightDiff + " " + widthDiff);
+        newCells[i + Math.floor(heightDiff / 2)][j + Math.floor(widthDiff / 2)] = true;//oldCells[i][j];
+      }
+    }
+
+    this.gameOfLife.cells = newCells;
+    this.gameOfLife.height = newHeight;
+    this.gameOfLife.width = newWidth;
+  }*/
+
   processLifFile(result)
   {
     this.errorMessage = "";
 
     let lines = this.breakFileIntoStringArray(result);
 
-    let height = 50;
-    let width = 50;
+    let height = 3;
+    let width = 3;
 
-    let cursor_x = Math.floor(width / 2);
-    let cursor_y = Math.floor(height / 2);
+    let cursor_hor: number;
+    let cursor_vert: number;
 
     let version: string;
 
@@ -99,19 +134,105 @@ export class GameService {
         {
           let line = lines[i].split(" ");
 
-          cursor_x = Math.floor(width / 2) + (+line[1]);
-          cursor_y = Math.floor(height / 2) + (+line[2]);
+          cursor_hor = Math.floor(width / 2) + (+line[1]);
+          cursor_vert = Math.floor(height / 2) - (+line[2]);
+
+          //if(+line[2] < 0)
+          //{
+            //console.log(cursor_hor+" " +cursor_vert);
+            //cursor_vert++;
+            //console.log(cursor_vert);
+         // }
+
+          //console.log(cursor_hor+" " +cursor_vert);
 
           continue;
         }
         
         for(let j = 0; j < lines[i].length; j++)
         {
+          /*if(lines[i][j] == ".")
+          {
+            console.log((cursor_x + j) + ": " + cursor_y);
+          }*/
           if(lines[i][j] == "*")
-            this.gameOfLife.cells[cursor_y][cursor_x + j] = true;
+          {
+            //console.log("* at x: " + (cursor_x + j) + ", y:" + cursor_y);
+            //console.log(10 - cursor_x + j + width);
+            //console.log(height + " " + cursor_hor + " " + cursor_vert);
+
+            if(height - cursor_vert < 3)
+            {
+              for(let k = 0; k < cursor_vert + 2 - height; k++)
+              {
+                this.gameOfLife.cells.push(new Array(width).fill(false));
+              }
+
+              this.gameOfLife.height += cursor_vert + 2 - height;
+              height = this.gameOfLife.height;
+            }
+
+            if(cursor_vert < 1)
+            {
+              console.log(cursor_hor + ":"+cursor_vert);
+
+              let newCv = 1 - cursor_vert;
+
+              for(let k = 0; k < 1 - cursor_vert; k++)
+              {
+                this.gameOfLife.cells.unshift(new Array(width).fill(false));
+              }
+              this.gameOfLife.height += 1 - cursor_vert;
+              height = this.gameOfLife.height;
+              cursor_vert += newCv;
+            }
+
+            if(width - cursor_hor < 3)
+            {
+              for(let k = 0; k < cursor_hor + 2 - width; k++)
+              {
+                for(let l = 0; l < height; l++)
+                {
+                  this.gameOfLife.cells[l].push(false);
+                }
+              }
+
+              this.gameOfLife.width += cursor_hor + 2 - width;
+              width = this.gameOfLife.width;
+            }
+
+            /*if(height - cursor_vert < 10)
+            {
+              let newHeight = cursor_vert + 10;
+              this.setSize(newHeight, width);
+              //cursor_y += Math.floor(cursor_y + 10 - height) / 2;
+              height = newHeight;
+              //console.log(newHeight);
+            }*/
+            /*if(cursor_y < 0 + 10)
+            {
+              this.setSize(10 - cursor_y + height, width);
+              //cursor_y += (10 - cursor_y + height) / 2;
+              height = 10 - cursor_y + height;
+            }*/
+
+            /*if(width - 10 < cursor_x + j)
+            {
+              this.setSize(height, (cursor_x + j) + 10);
+              width = (cursor_x + j) + 10;
+            }*/
+            /*if(cursor_x + j < 0 + 10)
+            {
+              let newWidthh: number = 10 - (cursor_x + j) + width;
+              this.setSize(height, newWidthh);
+              width = newWidthh;
+            }*/
+
+            this.gameOfLife.cells[cursor_vert][cursor_hor + j] = true;
+          }
         }
-        
-        cursor_y++;
+
+        cursor_vert++;
       }
       else if(version == "1.06")
       {
@@ -131,7 +252,7 @@ export class GameService {
     this.gameOfLife = new GameOfLife();
     this.gameOfLife.height = height;
     this.gameOfLife.width = width;
-    this.gameOfLife.cells = new Array(height).fill(false).map(() => new Array(width).fill(false));
+    this.gameOfLife.cells = new Array(height).fill(null).map(() => new Array(width).fill(false));
 
     this.gameOfLifeArray = new Array<GameOfLife>();
     this.gameOfLifeArray.push(this.gameOfLife);

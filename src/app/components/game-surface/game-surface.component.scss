@@ -1,28 +1,35 @@
-$cellSize: 8px;
+//$cellSize: 8px;
+$cellSize: 20px;
 
 table {
     margin: 10px;
     padding: 3px;
     background-color: black;
+    border-collapse: collapse;
 
     tr {
         height: $cellSize;
         width: $cellSize;
 
-        background-color: black;
-
         td {
             height: $cellSize;
             width: $cellSize;
 
+            border: 1px solid rgb(78, 78, 78);
             padding: 0;
-            
-            div {
-                background-color: white;
 
-                height: $cellSize;
-                width: $cellSize;
+            span{
+                font-size:10px;
+                color: rgb(172, 127, 172);
             }
+        }
+
+        .alive-cell {
+            background-color: rgb(53, 53, 53);
+        }
+
+        .dead-cell {
+            background-color: black;
         }
     }
 }

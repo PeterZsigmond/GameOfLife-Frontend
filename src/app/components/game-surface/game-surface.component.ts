@@ -18,4 +18,16 @@ export class GameSurfaceComponent implements OnInit {
   {
     
   }
+
+  onCellClick(event)
+  {
+    let target = event.target || event.srcElement || event.currentTarget;
+    let idAttr = target.attributes.id;
+    let value = idAttr.nodeValue;
+
+    let x = value.split("-")[2];
+    let y = value.split("-")[1];
+
+    this.gameService.setCell(x, y);
+  }
 }

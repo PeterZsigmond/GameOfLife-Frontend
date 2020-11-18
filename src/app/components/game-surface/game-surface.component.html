@@ -1,7 +1,6 @@
 <table *ngIf="gameService.gameOfLife != null && gameService.gameOfLife.height != 0">
-    <tr *ngFor="let row of gameService.gameOfLife.cells">
-        <td *ngFor="let column of row">
-            <div *ngIf="column==true"></div>
+    <tr *ngFor="let row of gameService.gameOfLife.cells; let i = index">
+        <td *ngFor="let column of row; let j = index" id="cell-{{ i }}-{{ j }}" class="{{ column==true ? 'alive-cell' : 'dead-cell' }}" (click)="onCellClick($event)">
         </td>
     </tr>
 </table>
